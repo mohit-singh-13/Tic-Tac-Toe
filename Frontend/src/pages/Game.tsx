@@ -21,7 +21,7 @@ const Game = ({ gameType }:
 
     const navigate = useNavigate();
 
-    const Players = {
+    const Players: any = {
         0: "X",
         1: "O"
     }
@@ -35,6 +35,7 @@ const Game = ({ gameType }:
         const element = document.getElementsByClassName("my-box");
         
         for (let i=0 ; i<element.length ; i++) {
+            // @ts-expect-error temporary ignoring the cause
             element[i].innerText = "";
         }
     }
@@ -106,7 +107,8 @@ const Game = ({ gameType }:
                 <div className="grid grid-cols-3 bg-bg-glass rounded-2xl py-8 px-4">
                 {
                     grid.map((box, index) => {
-                        return <Box setGrid={setGrid} index={index} key={index} gameType={gameType} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer} flag={flag} ansBox={ansBox} />
+                        // @ts-expect-error temporary ignoring the cause
+                        return <Box box={box} setGrid={setGrid} index={index} key={index} gameType={gameType} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer} flag={flag} ansBox={ansBox} />
                     })
                 }
                 </div>

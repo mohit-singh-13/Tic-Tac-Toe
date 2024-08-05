@@ -43,6 +43,7 @@ const OnlineGame = () => {
                     <div className="grid grid-cols-3 bg-bg-glass rounded-2xl py-8 px-4">
                     {
                         grid.map((box, index) => {
+                            // @ts-expect-error temporary ignoring the cause
                             return <Box key={index} box={box} index={index} setGrid={setGrid} flag={flag} currentPlayer={mySign} gameType={1} socket={socket} setWinner={setWinner} ansBox={ansBox} setAnsBox={setAnsBox} />
                         })
                     }

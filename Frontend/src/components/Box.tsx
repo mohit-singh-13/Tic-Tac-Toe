@@ -30,21 +30,23 @@ const Box = ({ index, currentPlayer, setCurrentPlayer, setGrid, flag, ansBox, ga
                 }
             }));
 
-            socket.onmessage = (event1) => {
-                const data = JSON.parse(event1.data);
+            if (socket) {
+                socket.onmessage = (event1) => {
+                    const data = JSON.parse(event1.data);
+                    
+                    if (data.status) {
+                        event.target.innerText = currentPlayer;
                 
-                if (data.status) {
-                    event.target.innerText = currentPlayer;
-            
-                    setGrid(data.grid);
-                }
-
-                if (data.type === "game_over") {
-                    setWinner(data.payload);
-
-                    if(data?.ansBox) {
-                        ansBox = data.ansBox;
-                        setAnsBox(data.ansBox);
+                        setGrid(data.grid);
+                    }
+    
+                    if (data.type === "game_over") {
+                        setWinner(data.payload);
+    
+                        if(data?.ansBox) {
+                            ansBox = data.ansBox;
+                            setAnsBox(data.ansBox);
+                        }
                     }
                 }
             }
