@@ -20,6 +20,7 @@ export class GameManager {
 
     removeUser(socket: WebSocket) {
         this.users.filter(user => user !== socket);
+        this.pendingUser = null;
     }
 
     private addHandler(socket: WebSocket) {
@@ -41,6 +42,10 @@ export class GameManager {
 
                 if (game) {
                     game.makeMove(socket, message.move);
+                }
+
+                if (game?.result) {
+                    this.games = this.games.filter(game => game.player1 !== socket && game.player2 !== socket);
                 }
             }
         })

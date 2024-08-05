@@ -6,7 +6,6 @@ import OnlineGame from "./pages/OnlineGame";
 
 function App() {
     const [gameType, setGameType] = useState<number | null>(null);
-    console.log("App");
 
     return (
         <div>
@@ -14,7 +13,7 @@ function App() {
                 <Route path="/" element={<Home setGameType={setGameType} />} />
 
                 <Route path="/game" element={<Game gameType={gameType} />} />
-                <Route path="/onlinegame" element={<OnlineGame />} />
+                <Route path="/onlinegame" element={<OnlineGame gameType={gameType} />} />
             </Routes>
         </div>
     )

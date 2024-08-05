@@ -4,9 +4,8 @@ import Box from "../components/Box";
 
 const Game = ({ gameType }: 
 { 
-    gameType: number | null
+    gameType: number | null;
 }) => {
-    console.log("Game");
 
     const winningPositions = [
         [0, 1, 2],
@@ -35,7 +34,7 @@ const Game = ({ gameType }:
         const element = document.getElementsByClassName("my-box");
         
         for (let i=0 ; i<element.length ; i++) {
-            // @ts-expect-error temporary ignoring the cause
+            // @ts-expect-error temporarily ignoring the cause
             element[i].innerText = "";
         }
     }
@@ -107,7 +106,7 @@ const Game = ({ gameType }:
                 <div className="grid grid-cols-3 bg-bg-glass rounded-2xl py-8 px-4">
                 {
                     grid.map((box, index) => {
-                        // @ts-expect-error temporary ignoring the cause
+                        // @ts-expect-error temporarily ignoring the cause
                         return <Box box={box} setGrid={setGrid} index={index} key={index} gameType={gameType} currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer} flag={flag} ansBox={ansBox} />
                     })
                 }

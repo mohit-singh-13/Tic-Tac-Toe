@@ -16,7 +16,7 @@ export class Game {
         [2, 4, 6]
     ];
 
-    private result;
+    public result;
 
     private gameGrid;
     private ansBox: number[];
@@ -24,6 +24,7 @@ export class Game {
     constructor(player1: WebSocket, player2: WebSocket) {
         this.player1 = player1;
         this.player2 = player2;
+
         this.moveCount = 0;
         this.gameGrid = ["", "", "", "", "", "", "", "", ""];
         this.ansBox = [];
@@ -47,30 +48,46 @@ export class Game {
     }) {
         if (this.result) {
             this.player1.send(JSON.stringify({
-                status: false
+                status: false,
+                payload: "result declared"
             }));
             this.player2.send(JSON.stringify({
-                status: false
+                status: false,
+                payload: "result declared"
             }));
             return;
         }
 
         if (this.moveCount % 2 === 0 && socket !== this.player1) {
-            this.player1.send(JSON.stringify({
-                status: false
+            this.player2.send(JSON.stringify({
+                status: false,
+                payload: "it's player 1 move"
             }))
             return;
         }
         if (this.moveCount % 2 === 1 && socket !== this.player2) {
-            this.player2.send(JSON.stringify({
-                status: false
+            this.player1.send(JSON.stringify({
+                status: false,
+                payload: "it's player 2 move"
             }))
             return;
         }
 
-        this.moveCount++;
         
-        this.gameGrid[move.box] = move.player;
+        if (this.gameGrid[move.box] === "") {
+            this.gameGrid[move.box] = move.player;
+            this.moveCount++;
+        } else {
+            this.player1.send(JSON.stringify({
+                status: false,
+                payload: "not empty place"
+            }));
+            this.player2.send(JSON.stringify({
+                status: false,
+                payload: "not empty place"
+            }));
+            return;
+        }
 
         const checkGameOver = () => {
             this.winningPos.forEach((pos) => {
@@ -103,10 +120,16 @@ export class Game {
                             }))
                         }
 
+                        
+
                         return;
                     }
                 }
-            })
+            });
+
+            if (this.ansBox.length > 1) {
+                return;
+            }
 
             let filledCount = 0;
             this.gameGrid.forEach(box => {

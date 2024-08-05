@@ -1,16 +1,18 @@
-const Box = ({ index, currentPlayer, setCurrentPlayer, setGrid, flag, ansBox, gameType, socket, box, setWinner, setAnsBox }: 
+const Box = ({ index, currentPlayer, setCurrentPlayer, setGrid, flag, ansBox, gameType, socket, box, setWinner, setAnsBox, setMySign, setSpinner }: 
 {
-    index: number, 
-    currentPlayer: string, 
-    setCurrentPlayer: (player: string) => void,
-    setGrid: (grid: (prevGrid: string[]) => string[]) => void,
-    flag: boolean,
-    ansBox: number[] | null,
-    gameType: number | null,
-    socket: WebSocket | null,
-    box: string,
-    setWinner: (data: string) => void,
-    setAnsBox: (data: number[]) => void
+    index: number;
+    currentPlayer: string;
+    setCurrentPlayer: (player: string) => void;
+    setGrid: (grid: (prevGrid: string[]) => string[]) => void;
+    flag: boolean;
+    ansBox: number[] | null;
+    gameType: number | null;
+    socket: WebSocket | null;
+    box: string;
+    setWinner: (data: string) => void;
+    setAnsBox: (data: number[]) => void;
+    setMySign: (data: string) => void;
+    setSpinner: (data: boolean) => void;
 }) => {
     const swapTurn = () => {
         if (currentPlayer === "X") {
@@ -33,6 +35,15 @@ const Box = ({ index, currentPlayer, setCurrentPlayer, setGrid, flag, ansBox, ga
             if (socket) {
                 socket.onmessage = (event1) => {
                     const data = JSON.parse(event1.data);
+
+                    if (data.type === "init_game") {
+                        setGrid(data.grid);
+                        setMySign(data.payload);
+
+                        setSpinner(false);
+                        setAnsBox([]);
+                        setWinner("");
+                    }
                     
                     if (data.status) {
                         event.target.innerText = currentPlayer;
@@ -42,9 +53,10 @@ const Box = ({ index, currentPlayer, setCurrentPlayer, setGrid, flag, ansBox, ga
     
                     if (data.type === "game_over") {
                         setWinner(data.payload);
+
+                        // setPlay(true);
     
                         if(data?.ansBox) {
-                            ansBox = data.ansBox;
                             setAnsBox(data.ansBox);
                         }
                     }
