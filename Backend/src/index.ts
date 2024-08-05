@@ -13,7 +13,6 @@ wss.on("connection", (ws) => {
     gameManager.addUser(ws);
 
     ws.on("close", () => {
-        console.log("Connection closed");
         gameManager.removeUser(ws);
     })
 })

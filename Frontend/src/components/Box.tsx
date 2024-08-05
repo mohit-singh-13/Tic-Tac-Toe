@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 const Box = ({ index, currentPlayer, setCurrentPlayer, setGrid, flag, ansBox, gameType, socket, box, setWinner, setAnsBox }: 
 {
     index: number, 
@@ -14,9 +12,6 @@ const Box = ({ index, currentPlayer, setCurrentPlayer, setGrid, flag, ansBox, ga
     setWinner: (data: string) => void,
     setAnsBox: (data: number[]) => void
 }) => {
-    console.log("Box");
-    // console.log(currentPlayer);
-
     const swapTurn = () => {
         if (currentPlayer === "X") {
             setCurrentPlayer("O");
@@ -36,32 +31,20 @@ const Box = ({ index, currentPlayer, setCurrentPlayer, setGrid, flag, ansBox, ga
             }));
 
             socket.onmessage = (event1) => {
-                console.log("Inside Box")
                 const data = JSON.parse(event1.data);
-
-                console.log(data);
                 
                 if (data.status) {
                     event.target.innerText = currentPlayer;
-                    event.target.className += " cursor-not-allowed ";
-                    const temp = event.target.className.split(" ");
-                    temp.splice(temp.indexOf("cursor-pointer"), 1);
-                    event.target.className = temp.join(" ");
-                    // console.log(event.target.className);
-                    console.log(data.grid);
+            
                     setGrid(data.grid);
                 }
 
                 if (data.type === "game_over") {
                     setWinner(data.payload);
-                    flag = false
-
-                    // console.log(data)
 
                     if(data?.ansBox) {
                         ansBox = data.ansBox;
                         setAnsBox(data.ansBox);
-                        // console.log(ansBox)
                     }
                 }
             }
@@ -85,7 +68,6 @@ const Box = ({ index, currentPlayer, setCurrentPlayer, setGrid, flag, ansBox, ga
     }
 
     let winClass = "";
-    // console.log("MOHIT SINGH")
     if (index === ansBox?.find(num => num === index)) {
         winClass = "bg-green-600";
     }

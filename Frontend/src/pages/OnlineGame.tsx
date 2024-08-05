@@ -15,13 +15,8 @@ const OnlineGame = () => {
         if (!socket) return;
 
         socket.onmessage = (event) => {
-            console.log("Inside OnlineGames")
             const data = JSON.parse(event.data);
-            // console.log(data);
             setMySign(data.payload);
-
-            console.log(data);
-
             setGrid(data.grid);
         }
     }, [socket]);

@@ -45,7 +45,6 @@ export class Game {
         box: number;
         player: string;
     }) {
-        // console.log("MOVE");
         if (this.result) {
             this.player1.send(JSON.stringify({
                 status: false
@@ -57,14 +56,12 @@ export class Game {
         }
 
         if (this.moveCount % 2 === 0 && socket !== this.player1) {
-            console.log("early return 1");
             this.player1.send(JSON.stringify({
                 status: false
             }))
             return;
         }
         if (this.moveCount % 2 === 1 && socket !== this.player2) {
-            console.log("early return 2");
             this.player2.send(JSON.stringify({
                 status: false
             }))
@@ -74,7 +71,6 @@ export class Game {
         this.moveCount++;
         
         this.gameGrid[move.box] = move.player;
-        console.log(this.gameGrid);
 
         const checkGameOver = () => {
             this.winningPos.forEach((pos) => {
@@ -95,7 +91,6 @@ export class Game {
                                 ansBox: this.ansBox
                             }));
                         } else {
-                            console.log("O is winner");
                             this.player1.send(JSON.stringify({
                                 type: GAME_OVER,
                                 payload: "You Lose 😭",
