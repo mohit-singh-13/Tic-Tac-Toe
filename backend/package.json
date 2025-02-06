@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"tsc -w\" \"nodemon dist/index.js\""
+    "dev": "concurrently \"tsc -w\" \"nodemon dist/index.js\" "
   },
   "keywords": [],
   "author": "",
@@ -11,5 +11,9 @@
   "description": "",
   "devDependencies": {
     "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "@types/ws": "^8.5.14",
+    "ws": "^8.18.0"
   }
 }
