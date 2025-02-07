@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
 
 const GridBox = ({
+  ws,
+  mySign,
   children,
   index,
   grid,
@@ -31,12 +33,26 @@ const GridBox = ({
     swapTurn();
   };
 
+  const wsClickHandler = () => {
+    if (!ws) return;
+
+    ws.send(
+      JSON.stringify({
+        type: "move",
+        payload: {
+          index,
+          player: mySign,
+        },
+      })
+    );
+  };
+
   const color = children === "X" ? "text-[#D65A31]" : "text-[#4F98CA]";
 
   return (
     <div
       className={`h-[6rem] sm:h-[7rem] md:h-[8rem] flex justify-center items-center border-2 w-full text-6xl md:text-7xl lg:text-8xl cursor-pointer font-['Array'] border-black ${color}`}
-      onClick={clickHandler}
+      onClick={ws ? wsClickHandler : clickHandler}
     >
       {children}
     </div>
@@ -44,6 +60,8 @@ const GridBox = ({
 };
 
 const Grid = ({
+  ws,
+  mySign,
   grid,
   setGrid,
   currentPlayer,
@@ -57,6 +75,8 @@ const Grid = ({
         {grid.map((box, index) => (
           <GridBox
             key={index}
+            ws={ws}
+            mySign={mySign}
             index={index}
             grid={grid}
             setGrid={setGrid}

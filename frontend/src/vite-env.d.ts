@@ -7,4 +7,6 @@ interface GridProps {
   setCurrentPlayer: React.Dispatch<React.SetStateAction<string>>;
   winner: string;
   count: React.RefObject<number>;
+  ws?: WebSocket;
+  mySign?: string;
 }
