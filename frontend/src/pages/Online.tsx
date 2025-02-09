@@ -8,6 +8,7 @@ import useSocket from "../hooks/useSocket";
 import Result from "../components/Result";
 import Move from "../components/Move";
 import CloseBtn from "../components/CloseBtn";
+import Loader from "../components/Loader";
 
 interface ResponseProps {
   status: boolean;
@@ -152,22 +153,16 @@ const Online = () => {
         {ws ? (
           <div className="w-full relative z-[60]">
             {!connecting ? (
-              <div onClick={newGameHandler} className="w-ful">
+              <div onClick={newGameHandler} className="w-full">
                 {!mySign && <Button>New Game</Button>}
               </div>
             ) : (
-              <div className="flex justify-center items-center gap-3 bg-black/40 text-white py-4 rounded-md font-semibold text-center text-xl">
-                <span className="loader"></span>Finding Player
-              </div>
+              <Loader>Finding Player</Loader>
             )}
           </div>
         ) : (
-          <div className="w-full">
-            <Button>
-              <div className="flex justify-center items-center gap-3">
-                <span className="loader"></span>Please wait
-              </div>
-            </Button>
+          <div className="w-full relative z-[60]">
+            <Loader>Please wait</Loader>
           </div>
         )}
 
