@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import Button from "../components/Button";
 import Container from "../components/Container";
 import Grid from "../components/Grid";
-import { TbReload } from "react-icons/tb";
-import { IoClose, IoHomeOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
 import player1 from "/player1.svg";
 import player2 from "/player2.svg";
+import Move from "../components/Move";
+import Result from "../components/Result";
+import CloseBtn from "../components/CloseBtn";
 
 const Offline = () => {
   const [grid, setGrid] = useState(["", "", "", "", "", "", "", "", ""]);
@@ -34,6 +33,10 @@ const Offline = () => {
   };
 
   useEffect(() => {
+    if (count.current === 9) {
+      setWinner("tie");
+    }
+
     winningPositions.forEach((winPos) => {
       if (
         (grid[winPos[0]] === "X" || grid[winPos[0]] === "O") &&
@@ -64,23 +67,16 @@ const Offline = () => {
 
   return (
     <div className="min-h-screen w-full relative">
-      {winner !== "" && (
-        <div className="absolute z-20 h-full w-full bg-white/70 flex justify-center items-center text-6xl font-['Array'] font-bold text-center flex-col gap-7">
-          {winner} Wins <br /> :)
-          <div className="flex gap-4">
-            <div className="px-2 py-2 bg-black rounded-md" onClick={initGame}>
-              <Link to={"/offline"}>
-                <TbReload size={"3rem"} color="white" />
-              </Link>
-            </div>
-            <div className="px-2 py-2 bg-black rounded-md">
-              <Link to={"/"}>
-                <IoHomeOutline size={"3rem"} color="white" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
+      {winner !== "" &&
+        (winner === "tie" ? (
+          <Result href="offline" onClick={initGame}>
+            It's a tie!😮‍💨
+          </Result>
+        ) : (
+          <Result href="offline" onClick={initGame}>
+            {winner} Wins🥳
+          </Result>
+        ))}
 
       <Container>
         <div
@@ -91,11 +87,7 @@ const Offline = () => {
           <img src={player2} alt="player2" className="w-[10rem] rotate-y-180" />
         </div>
 
-        <div className="absolute top-2 left-0 px-2 md:left-[-2rem] py-2 bg-black">
-          <Link to={"/"}>
-            <IoClose color="white" />
-          </Link>
-        </div>
+        <CloseBtn />
 
         <div className="w-full pt-[7.5rem]">
           <Grid
@@ -108,18 +100,7 @@ const Offline = () => {
           />
         </div>
 
-        {count.current === 9 && winner === "" && (
-          <div onClick={initGame} className="w-full">
-            <Button>New Game</Button>
-          </div>
-        )}
-
-        {winner === "" && count.current < 9 && (
-          <p className="font-['Array'] text-5xl">
-            {currentPlayer}
-            <span className="font-mono text-3xl">'s Move</span>
-          </p>
-        )}
+        {winner === "" && count.current < 9 && <Move>{currentPlayer}</Move>}
       </Container>
     </div>
   );

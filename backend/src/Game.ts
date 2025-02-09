@@ -4,8 +4,8 @@ import { Payload, Player } from "./GameManager";
 export class Game {
   public player1;
   public player2;
-  public winner: Player | null;
-  
+  public winner: Player | "tie" | null;
+
   private winningPositions = [
     [0, 1, 2],
     [3, 4, 5],
@@ -17,18 +17,21 @@ export class Game {
     [2, 4, 6],
   ];
   private grid = ["", "", "", "", "", "", "", "", ""];
-  private moveCount = 0;
+  private moveCount: number;
   private currentTurn: Player;
-  
+
   constructor(socket1: WebSocket, socket2: WebSocket) {
     this.player1 = socket1;
     this.player2 = socket2;
     this.currentTurn = "O";
     this.winner = null;
+    this.moveCount = 0;
+    console.log("RESEGIN : ", this.moveCount);
+    const randomSign = Math.floor(Math.random() * 10) % 2;
 
     this.player1.send(
       JSON.stringify({
-        payload: "O",
+        sign: randomSign === 0 ? "O" : "X",
         status: true,
         grid: this.grid,
         turn: this.currentTurn,
@@ -37,7 +40,7 @@ export class Game {
 
     this.player2.send(
       JSON.stringify({
-        payload: "X",
+        sign: randomSign === 0 ? "X" : "O",
         status: true,
         grid: this.grid,
         turn: this.currentTurn,
@@ -57,11 +60,14 @@ export class Game {
     });
 
     if (this.moveCount === 9) {
+      this.winner = "tie";
+
       this.player1.send(
         JSON.stringify({
           status: true,
           grid: this.grid,
           winner: "tie",
+          moveCount: this.moveCount,
         })
       );
 
@@ -70,6 +76,7 @@ export class Game {
           status: true,
           grid: this.grid,
           winner: "tie",
+          moveCount: this.moveCount,
         })
       );
     }
@@ -106,6 +113,7 @@ export class Game {
           status: true,
           grid: this.grid,
           winner: this.winner,
+          moveCount: this.moveCount,
         })
       );
 
@@ -114,6 +122,7 @@ export class Game {
           status: true,
           grid: this.grid,
           winner: this.winner,
+          moveCount: this.moveCount,
         })
       );
       return;
@@ -122,7 +131,8 @@ export class Game {
         JSON.stringify({
           status: true,
           grid: this.grid,
-          currentTurn: this.currentTurn,
+          turn: this.currentTurn,
+          moveCount: this.moveCount,
         })
       );
 
@@ -130,7 +140,8 @@ export class Game {
         JSON.stringify({
           status: true,
           grid: this.grid,
-          currentTurn: this.currentTurn,
+          turn: this.currentTurn,
+          moveCount: this.moveCount,
         })
       );
       return;
@@ -139,6 +150,7 @@ export class Game {
 
   public makeMove(socket: WebSocket, message: Payload) {
     // validating move
+    console.log(this.moveCount);
     const isValid = this.checkValidMove(socket, message);
     if (!isValid) return;
 
