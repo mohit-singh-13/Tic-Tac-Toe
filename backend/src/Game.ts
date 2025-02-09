@@ -26,7 +26,6 @@ export class Game {
     this.currentTurn = "O";
     this.winner = null;
     this.moveCount = 0;
-    console.log("RESEGIN : ", this.moveCount);
     const randomSign = Math.floor(Math.random() * 10) % 2;
 
     this.player1.send(
@@ -150,7 +149,6 @@ export class Game {
 
   public makeMove(socket: WebSocket, message: Payload) {
     // validating move
-    console.log(this.moveCount);
     const isValid = this.checkValidMove(socket, message);
     if (!isValid) return;
 

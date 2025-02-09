@@ -36,20 +36,16 @@ export class GameManager {
     // this.pendingUser = null;
     if (socket === this.pendingUser) {
       this.pendingUser = null;
-      console.log("CLESR")
     }
   }
 
   private connectionHandler(socket: WebSocket) {
     socket.on("message", (data) => {
-      // console.log(this.pendingUser?.OPEN)
       const message: Message = JSON.parse(data.toString());
-      console.log(message);
 
       if (message.type === "init") {
         if (this.pendingUser) {
           // creating new game
-          console.log("NEW GAME");
           const game = new Game(this.pendingUser, socket);
 
           // pushing the game to games[]
