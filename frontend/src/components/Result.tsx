@@ -13,7 +13,7 @@ const Result = ({
   href: "online" | "offline";
 }) => {
   return (
-    <div className="absolute z-[70] h-full w-full bg-white/70 flex justify-center items-center text-6xl font-['Array'] font-bold text-center flex-col gap-7">
+    <div className="absolute z-[70] h-full w-full bg-white/70 flex justify-center items-center text-6xl font-['Array-Bold'] text-center flex-col gap-7">
       {children}
       <div className="flex gap-4">
         <div className="px-2 py-2 bg-black rounded-md">

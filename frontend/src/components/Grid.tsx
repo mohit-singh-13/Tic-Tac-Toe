@@ -51,7 +51,7 @@ const GridBox = ({
 
   return (
     <div
-      className={`h-[6rem] sm:h-[7rem] md:h-[8rem] flex justify-center items-center border-2 w-full text-6xl md:text-7xl lg:text-8xl cursor-pointer font-['Array'] border-black ${color}`}
+      className={`h-[6rem] sm:h-[7rem] md:h-[8rem] flex justify-center items-center border-2 w-full text-6xl md:text-7xl lg:text-8xl cursor-pointer font-['Array-Wide'] border-black ${color}`}
       onClick={ws ? wsClickHandler : clickHandler}
     >
       {children}
