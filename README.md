@@ -1,10 +1,51 @@
-# Tic-Tac-Toe
+# 🎮 Tic-Tac-Toe (Real-Time Multiplayer)
 
-- Developed a Tic-Tac-Toe game with a minimalist and clear user interface.
-- It is a real time Tic-Tac-Toe game built using WebSocket server instead of typical HTTP server.
-- Players can play online as well as offline with each other.
-- When you choose to play online, the server connects you to some other player randomly on the other side of globe.
-- Users can play until someone wins or the game ends in a tie.
-- It also indicates which user's turn is this.
-- Technologies used are React, 'ws' library for WebSocket and TypeScript. Frontend is deployed on vercel.com and backend is deployed on render.com.
-- NOTE : The backend is hosted on a free instance of Render, which spins down after 15 minutes of inactivity. This may cause a 40-50 seconds delay when restarting the server, so please expect some delay when playing online for the first time after a period of inactivity.
+A minimalist and engaging **Tic-Tac-Toe** game that allows players to compete **online** in real-time using **WebSockets** or play **offline** with a friend. Built with a modern tech stack for a seamless gaming experience.
+
+---
+
+## ✨ Features
+
+- **Real-Time Online Play**: Players are matched randomly with others across the globe.
+- **Offline Mode**: Play locally with a friend on the same device.
+- **Turn Indicator**: Clearly shows which player's turn it is.
+- **Win/Tie Detection**: The game announces the winner or detects a draw.
+- **Minimalist UI**: Simple, clean, and responsive design for a smooth user experience.
+
+---
+
+## 🛠️ Technologies Used
+
+- **Frontend**: React, Tailwind CSS, TypeScript
+- **Backend**: Node.js, `ws` library (WebSocket)
+- **Hosting**:
+  - Frontend: [Vercel](https://vercel.com/)
+  - Backend: [Render](https://render.com/)
+
+---
+
+## 🚀 How It Works
+
+1. **Online Mode**:
+   - Connects you to a random player worldwide.
+   - The game updates in real-time using WebSockets.
+2. **Offline Mode**:
+   - Allows two players to play on the same screen.
+   - No internet connection required.
+
+---
+
+## ⚠️ Important Note
+
+The backend is hosted on a **free Render instance**, which **spins down** after **15 minutes** of inactivity.  
+As a result, the first online match **may take 40-50 seconds** to connect while the server restarts. Please be patient. 🚀
+
+---
+
+## 🎮 Play Now!
+
+🔗 **[Live Demo](https://ms-tic-tac-toe.vercel.app/)**
+
+---
+
+Enjoy playing Tic-Tac-Toe! 🏆🔥
