@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import Container from "../components/Container";
 import Grid from "../components/Grid";
-import player1 from "/player1.svg";
-import player2 from "/player2.svg";
 import Move from "../components/Move";
 import Result from "../components/Result";
 import CloseBtn from "../components/CloseBtn";
+import playersArray from "../utils/player";
+import { randomIndex1, randomIndex2 } from "../utils/player";
 
 const Offline = () => {
   const [grid, setGrid] = useState(["", "", "", "", "", "", "", "", ""]);
@@ -83,8 +83,16 @@ const Offline = () => {
           className="flex absolute z-0 top-0 pt-[3rem] md:gap-[3.5rem]"
           ref={ImageContainer}
         >
-          <img src={player1} alt="player1" className="w-[10rem] " />
-          <img src={player2} alt="player2" className="w-[10rem] rotate-y-180" />
+          <img
+            src={playersArray[randomIndex1]}
+            alt="player1"
+            className="w-[10rem] "
+          />
+          <img
+            src={playersArray[randomIndex2]}
+            alt="player2"
+            className="w-[10rem] rotate-y-180"
+          />
         </div>
 
         <CloseBtn />

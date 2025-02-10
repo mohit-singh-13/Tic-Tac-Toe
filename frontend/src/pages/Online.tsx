@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import Container from "../components/Container";
 import Grid from "../components/Grid";
 import Button from "../components/Button";
-import player1 from "/player1.svg";
-import player2 from "/player2.svg";
 import useSocket from "../hooks/useSocket";
 import Result from "../components/Result";
 import Move from "../components/Move";
 import CloseBtn from "../components/CloseBtn";
 import Loader from "../components/Loader";
+import playersArray from "../utils/player";
+import { randomIndex1, randomIndex2 } from "../utils/player";
 
 interface ResponseProps {
   status: boolean;
@@ -122,9 +122,13 @@ const Online = () => {
             className="flex absolute z-0 top-0 pt-[3rem] md:gap-[3.5rem]"
             ref={ImageContainer}
           >
-            <img src={player1} alt="player1" className="w-[10rem] " />
             <img
-              src={player2}
+              src={playersArray[randomIndex1]}
+              alt="player1"
+              className="w-[10rem] "
+            />
+            <img
+              src={playersArray[randomIndex2]}
               alt="player2"
               className="w-[10rem] rotate-y-180"
             />
